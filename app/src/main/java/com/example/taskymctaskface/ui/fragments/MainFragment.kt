@@ -1,5 +1,6 @@
 package com.example.taskymctaskface.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,6 +15,7 @@ import com.example.taskymctaskface.data.local.model.Counter
 import com.example.taskymctaskface.databinding.FragmentMainBinding
 import com.example.taskymctaskface.ui.adapter.MainActivityAdapter
 import com.example.taskymctaskface.ui.viewmodels.MainActivityViewModel
+import kotlin.random.Random
 
 
 class MainFragment : Fragment() {
@@ -69,6 +71,14 @@ class MainFragment : Fragment() {
                         val gb = toolbar.menu.findItem(R.id.grid_btn)
                         gb.isVisible = true
                         mainRv.layoutManager = LinearLayoutManager(requireContext())
+                        mainRv.post {
+                            for(i in 0 until mainRv.childCount){
+                                val newColor = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+                                val holder = mainRv.findViewHolderForAdapterPosition(i)
+                                holder?.itemView?.setBackgroundColor(newColor)
+                            }
+                        }
+
                         true
                     }
                     R.id.grid_btn -> {
@@ -76,6 +86,13 @@ class MainFragment : Fragment() {
                         val lb = toolbar.menu.findItem(R.id.linear_btn)
                         lb.isVisible = true
                         mainRv.layoutManager = GridLayoutManager(requireContext(), 4)
+                        mainRv.post {
+                            for(i in 0 until mainRv.childCount){
+                                val newColor = Color.argb(255, Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+                                val holder = mainRv.findViewHolderForAdapterPosition(i)
+                                holder?.itemView?.setBackgroundColor(newColor)
+                            }
+                        }
                         true
                     }
                     else -> false
