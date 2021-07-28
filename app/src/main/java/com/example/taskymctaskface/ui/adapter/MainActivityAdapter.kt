@@ -32,7 +32,7 @@ class MainActivityAdapter(
 
     fun loadCounters(counterList: List<Counter>) {
         adapterCounterList = counterList
-        notifyDataSetChanged()
+        notifyItemInserted(counterList.size - 1)
     }
 
     class MainActivityViewHolder(private val binding: TextRowItemBinding):

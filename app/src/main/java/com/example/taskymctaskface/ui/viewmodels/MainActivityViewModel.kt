@@ -1,15 +1,10 @@
 package com.example.taskymctaskface.ui.viewmodels
 
-import android.app.Application
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.taskymctaskface.MainActivity
 import com.example.taskymctaskface.data.local.model.Counter
-import com.example.taskymctaskface.ui.fragments.MainFragment
-import java.security.AccessController.getContext
+
 
 class MainActivityViewModel : ViewModel() {
     private var counter = 0

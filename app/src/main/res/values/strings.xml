@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TaskyMcTaskface</string>
+    <string name="element_text">10</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new_number">Add New Number</string>
+    <string name="tasky_mctaskface">Tasky McTaskface</string>
+    <string name="grid_layout">Grid Layout</string>
+    <string name="linear_layout">Linear Layout</string>
+</resources>

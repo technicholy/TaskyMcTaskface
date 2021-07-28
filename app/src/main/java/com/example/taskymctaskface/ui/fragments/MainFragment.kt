@@ -1,15 +1,15 @@
 package com.example.taskymctaskface.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.taskymctaskface.R
 import com.example.taskymctaskface.data.local.model.Counter
 import com.example.taskymctaskface.databinding.FragmentMainBinding
 import com.example.taskymctaskface.ui.adapter.MainActivityAdapter
@@ -28,11 +28,12 @@ class MainFragment : Fragment() {
         MainActivityAdapter(this::onItemClick)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val toast = Toast.makeText(activity, message, toastLength)
+        setHasOptionsMenu(true)
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
-
+        val toast = Toast.makeText(activity, message, toastLength)
         toast.show()
     }
 
@@ -56,15 +57,32 @@ class MainFragment : Fragment() {
         with(binding){
             mainRv.apply {
                 adapter = mainActivityAdapter
-                layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
                 addNewNumberBtn.setOnClickListener {
                     viewModel.addNewCounter()
                 }
             }
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.linear_btn -> {
+                        it.isVisible = false
+                        val gb = toolbar.menu.findItem(R.id.grid_btn)
+                        gb.isVisible = true
+                        mainRv.layoutManager = LinearLayoutManager(requireContext())
+                        true
+                    }
+                    R.id.grid_btn -> {
+                        it.isVisible = false
+                        val lb = toolbar.menu.findItem(R.id.linear_btn)
+                        lb.isVisible = true
+                        mainRv.layoutManager = GridLayoutManager(requireContext(), 4)
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
