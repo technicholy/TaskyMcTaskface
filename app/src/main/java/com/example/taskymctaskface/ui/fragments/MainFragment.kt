@@ -1,5 +1,6 @@
 package com.example.taskymctaskface.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +25,7 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainActivityViewModel
     private val mainActivityAdapter: MainActivityAdapter by lazy {
-        MainActivityAdapter()
+        MainActivityAdapter(this::onItemClick)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,10 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.counterList.observe(viewLifecycleOwner) {
             mainActivityAdapter.submitList(it)
+            mainActivityAdapter.loadCounters(it)
+        }
+        viewModel.toastMessage.observe(viewLifecycleOwner){
+            Toast.makeText(activity, "You clicked $it", Toast.LENGTH_LONG).show()
         }
         with(binding){
             mainRv.apply {
@@ -65,4 +70,9 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+    private fun onItemClick(counter: Counter) {
+        viewModel.toastCounter(counter)
+    }
+
 }
+

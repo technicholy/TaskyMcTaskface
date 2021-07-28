@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskymctaskface.data.local.model.Counter
 import com.example.taskymctaskface.databinding.TextRowItemBinding
 
-class MainActivityAdapter()
+class MainActivityAdapter(
+    private val listener: (counter : Counter) -> Unit)
     : ListAdapter<Counter, MainActivityAdapter.MainActivityViewHolder>(DiffCallback()) {
-
+    private var adapterCounterList = listOf<Counter>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainActivityViewHolder {
         return MainActivityViewHolder(
@@ -20,11 +21,18 @@ class MainActivityAdapter()
                 parent,
                 false
             )
-        )
+        ).apply {
+            itemView.setOnClickListener { listener.invoke(adapterCounterList[adapterPosition]) }
+        }
     }
 
     override fun onBindViewHolder(holder: MainActivityViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    fun loadCounters(counterList: List<Counter>) {
+        adapterCounterList = counterList
+        notifyDataSetChanged()
     }
 
     class MainActivityViewHolder(private val binding: TextRowItemBinding):
